@@ -201,6 +201,12 @@ When modifying the PKGBUILD:
    - Ensure all dependencies are listed correctly
    - Review the build output for specific errors
 
+5. **Electron version issues/missing en-US.json version Workaround**
+   - The client seems to want to use an existing electron installation which seems to be incompatible
+   - uninstall electron via pacman
+   - relaunch with sudo, this will install the correct version then fail
+   - launch normally
+
 ### Tips for Developers
 
 - Always test in a chroot environment before pushing changes
