@@ -1,7 +1,7 @@
 # Maintainer: Claude Desktop Linux Maintainers
 
-pkgname=claude-desktop
-pkgver=1.0.0 # Will be replaced with actual claude desktop version during build
+pkgname=claude-desktop-arch
+pkgver=0.13.37 # Will be replaced with actual claude desktop version during build
 pkgrel=1
 pkgdesc="Claude Desktop for Linux"
 arch=('x86_64')
@@ -11,6 +11,8 @@ depends=('nodejs' 'npm')
 makedepends=('wget' 'icoutils' 'imagemagick' '7zip')
 provides=("${pkgname}")
 conflicts=("${pkgname}")
+epoch=1
+
 
 # Update this URL when a new version of Claude Desktop is released
 _download_url="https://storage.googleapis.com/osprey-downloads-c02f6a0d-347c-492b-a752-3e0651722e97/nest-win-x64/Claude-Setup-x64.exe"
@@ -329,7 +331,7 @@ fi
 # Clean up lock file before launching
 rm -f /tmp/claude-desktop-electron-install.lock
 
-exec "$ELECTRON_PATH" /usr/lib/claude-desktop/app.asar "$@"
+exec "$ELECTRON_PATH" /usr/lib/claude-desktop-arch/app.asar "$@"
 EOF
     chmod +x "${pkgdir}/usr/bin/claude-desktop"
 }

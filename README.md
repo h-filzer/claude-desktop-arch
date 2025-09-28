@@ -49,7 +49,7 @@ The `-si` flag will install any required dependencies and the package after buil
 If you prefer to install the package manually after building:
 
 ```bash
-sudo pacman -U claude-desktop-*.pkg.tar.zst
+sudo pacman -U claude-desktop-arch-*.pkg.tar.zst
 ```
 
 ## Running Claude Desktop
