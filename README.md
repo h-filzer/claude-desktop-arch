@@ -1,5 +1,29 @@
 # Claude Desktop for Arch Linux
 
+
+
+This repo is mainly unmaintained. Please consider using the [Claude-Desktop App-Image](https://github.com/aaddrick/claude-desktop-debian/tree/main/) instead as it is more up-to-date.
+Things I noticed while using the App-Image are:
+- It requires `fuse2` to be installed on your system. You can install it via your package manager (e.g. `sudo pacman -S fuse2`).
+- Copy the App-Image to a location where you want to keep it in your $PATH.
+- It does not create a menu entry automatically. You can create one manually containing the following in `/usr/share/applications/claude-desktop.desktop` pointing to the installed location (EXEC) of the App-Image:
+```
+[Desktop Entry]
+Name=Claude
+Exec=claude-desktop %u
+Icon=claude-desktop
+Type=Application
+Terminal=false
+Categories=Office;Utility;
+MimeType=x-scheme-handler/claude;
+StartupWMClass=Claude
+```
+and run `sudo update-desktop-database /usr/share/applications` to register the `claude://` URL scheme.
+- For me the login via "google" did not work. I had to use the "Sign in with email" option and follow the link to authenticate.
+
+
+If u want to use this Repo anyway, you can follow the instructions below.
+
 This repository contains a PKGBUILD file to build and install Claude Desktop on Arch Linux and Arch-based distributions (like Manjaro, EndeavourOS, etc.).
 Credits go to [claude-desktop-debian](https://github.com/aaddrick/claude-desktop-debian) which is the base for this repository.
 
