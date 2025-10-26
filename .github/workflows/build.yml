@@ -1,0 +1,59 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, trinity-upgrade ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Update system and install dependencies
+      run: |
+        pacman -Syu --noconfirm
+        pacman -S --noconfirm base-devel git wget icoutils imagemagick p7zip nodejs npm
+    
+    - name: Create build user
+      run: |
+        useradd -m builder
+        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        chown -R builder:builder .
+    
+    - name: Validate PKGBUILD
+      run: |
+        su - builder -c "cd $(pwd) && namcap PKGBUILD || true"
+    
+    - name: Check .SRCINFO sync
+      run: |
+        su - builder -c "cd $(pwd) && makepkg --printsrcinfo > .SRCINFO.new"
+        if ! diff -q .SRCINFO .SRCINFO.new; then
+          echo "❌ .SRCINFO is out of sync with PKGBUILD"
+          diff .SRCINFO .SRCINFO.new || true
+          exit 1
+        fi
+        echo "✅ .SRCINFO is in sync"
+    
+    - name: Build package
+      run: |
+        su - builder -c "cd $(pwd) && makepkg -s --noconfirm"
+    
+    - name: Upload package artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: claude-desktop-package
+        path: claude-desktop-*.pkg.tar.zst
+        retention-days: 7
+    
+    - name: Test package installation
+      run: |
+        pacman -U --noconfirm claude-desktop-*.pkg.tar.zst
+        pacman -Qi claude-desktop
