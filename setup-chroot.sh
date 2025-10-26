@@ -8,7 +8,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CHROOT_DIR="${SCRIPT_DIR}/chroot-test"
-PACKAGE_NAME="claude-desktop"
+PACKAGE_NAME="claude-desktop-arch"
 
 # Colors for output
 RED='\033[0;31m'
@@ -155,13 +155,13 @@ install_package() {
     # Install the built package
     sudo arch-chroot "$CHROOT_DIR" /bin/bash -c "
         cd /home/builder
-        pacman -U claude-desktop-*.pkg.tar.zst --noconfirm
+        pacman -U claude-desktop-arch-*.pkg.tar.zst --noconfirm
     "
     
     if [ $? -eq 0 ]; then
         print_status "Package installed successfully!"
         print_status "Verifying installation:"
-        sudo arch-chroot "$CHROOT_DIR" pacman -Qi claude-desktop | grep "Version"
+        sudo arch-chroot "$CHROOT_DIR" pacman -Qi claude-desktop-arch | grep "Version"
     else
         print_error "Package installation failed."
         return 1

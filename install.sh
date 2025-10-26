@@ -17,7 +17,7 @@ makepkg -s
 if [ $? -eq 0 ]; then
     echo "Package built successfully. Installing with sudo..."
     # Install the built package with sudo
-    sudo pacman -U --noconfirm claude-desktop-*.pkg.tar.zst
+    sudo pacman -U --noconfirm claude-desktop-arch-*.pkg.tar.zst
 
     if [ $? -eq 0 ]; then
         echo "✓ Claude Desktop has been successfully installed!"
