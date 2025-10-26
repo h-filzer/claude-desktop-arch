@@ -1,7 +1,7 @@
 # Maintainer: Claude Desktop Linux Maintainers
 
 pkgname=claude-desktop
-pkgver=1.0.0 # Will be replaced with actual claude desktop version during build
+pkgver=0.13.19 # Will be replaced with actual claude desktop version during build
 pkgrel=1
 pkgdesc="Claude Desktop for Linux"
 arch=('x86_64')
