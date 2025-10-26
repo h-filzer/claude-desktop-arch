@@ -2,21 +2,37 @@
 pkg/
 src/
 *.pkg.tar.zst
+*.pkg.tar.zst.sig
 *.pkg.tar.xz
 build/
 chroot-*/
+chroot-test/
 node_modules/
+
 # Temporary files
 *.exe
 *.log
 *.tmp
 *~
+.SRCINFO.test
+.SRCINFO.new
 
 # Downloaded files
 Claude-Setup-x64.exe
 
 # Extracted files
 *.ico
-*.png
+*.nupkg
 package-lock.json
-package.json
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
