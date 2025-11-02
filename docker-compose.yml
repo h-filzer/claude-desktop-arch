@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: claude-desktop-builder:latest
+    container_name: claude-desktop-builder
+    volumes:
+      - .:/build
+      - build-cache:/home/builder/.cache
+    working_dir: /build
+    user: builder
+    command: makepkg -s --noconfirm
+    environment:
+      - MAKEFLAGS=-j$(nproc)
+
+  # Optional: Test environment
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: claude-desktop-builder:latest
+    container_name: claude-desktop-tester
+    volumes:
+      - .:/build
+    working_dir: /build
+    command: |
+      bash -c "
+        makepkg -s --noconfirm &&
+        sudo pacman -U --noconfirm claude-desktop-*.pkg.tar.zst &&
+        pacman -Qi claude-desktop
+      "
+    depends_on:
+      - builder
+
+volumes:
+  build-cache:
+    driver: local

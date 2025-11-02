@@ -25,7 +25,16 @@ and run `sudo update-desktop-database /usr/share/applications` to register the `
 If u want to use this Repo anyway, you can follow the instructions below.
 
 This repository contains a PKGBUILD file to build and install Claude Desktop on Arch Linux and Arch-based distributions (like Manjaro, EndeavourOS, etc.).
+
+**Current version**: 0.13.19
+
 Credits go to [claude-desktop-debian](https://github.com/aaddrick/claude-desktop-debian) which is the base for this repository.
+
+## Quick Links
+
+- 📦 [AUR Package](https://aur.archlinux.org/packages/claude-desktop) *(coming soon)*
+- 📖 [AUR Publishing Guide](AUR.md)
+- 🔍 [Version Checker](check-version.sh)
 
 ## Building and Installing
 
@@ -102,7 +111,28 @@ When experiencing errors, have all claude pids killed by: `ps awx | grep claude 
 
 ## Updating
 
-When a new version of Claude Desktop is released, update the `_download_url` variable in the PKGBUILD file and rebuild the package.
+When a new version of Claude Desktop is released:
+
+1. **Check for updates**:
+   ```bash
+   ./check-version.sh
+   ```
+
+2. **Update manually** (if new version found):
+   ```bash
+   # Edit PKGBUILD and update pkgver
+   nano PKGBUILD
+   
+   # Regenerate .SRCINFO (requires makepkg)
+   makepkg --printsrcinfo > .SRCINFO
+   
+   # Test the build
+   ./setup-chroot.sh all
+   ```
+
+3. **Update the `_download_url`** in PKGBUILD if the download location changes
+
+See [AUR.md](AUR.md) for publishing updates to the AUR.
 
 ## Development and Testing
 
